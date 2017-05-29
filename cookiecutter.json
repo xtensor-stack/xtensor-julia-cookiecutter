@@ -1,0 +1,9 @@
+{
+    "author_name": "",
+    "author_email": "",
+    "github_project_name": "Xexample.jl",
+    "github_organization_name": "QuantStack",
+    "julia_package_name": "Xexample",
+    "cpp_package_name": "xexample",
+    "project_short_description": "An example xtensor extension"
+}
