@@ -1,0 +1,66 @@
+build: false
+
+os: Visual Studio 2015
+
+platform:
+  - x64
+  - x86
+
+environment:
+  matrix:
+    - MINICONDA: C:\xtensor-conda
+
+init:
+  # Install miniconda
+  - "ECHO %MINICONDA%"
+  - C:\"Program Files (x86)"\"Microsoft Visual Studio 14.0"\VC\vcvarsall.bat %PLATFORM%
+  - ps: if($env:Platform -eq "x64"){Start-FileDownload 'http://repo.continuum.io/miniconda/Miniconda3-latest-Windows-x86_64.exe' C:\Miniconda.exe; echo "Done"}
+  - ps: if($env:Platform -eq "x86"){Start-FileDownload 'http://repo.continuum.io/miniconda/Miniconda3-latest-Windows-x86.exe' C:\Miniconda.exe; echo "Done"}
+  - cmd: C:\Miniconda.exe /S /D=C:\xtensor-conda
+  - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%MINICONDA%\\Library\\bin;%PATH%"
+  # Download most recent Julia Windows binary
+  - ps: if($env:Platform -eq "x64"){(new-object net.webclient).DownloadFile(
+        $("http://s3.amazonaws.com/"+"julialang/bin/winnt/x64/0.5/julia-0.5-latest-win64.exe"),
+        "C:\projects\julia-binary.exe")}
+  - ps: if($env:Platform -eq "x86"){(new-object net.webclient).DownloadFile(
+        $("http://s3.amazonaws.com/"+"julialang/bin/winnt/x86/0.5/julia-0.5-latest-win32.exe"),
+        "C:\projects\julia-binary.exe")}
+  # Run installer silently, output to C:\projects\julia-build
+  - C:\projects\julia-binary.exe /S /D=C:\projects\julia-build
+
+
+install:
+  # Conda install cmake
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - conda install cmake
+  # Install CxxWrap
+  - set BUILD_ON_WINDOWS=1 
+  - C:\projects\julia-build\bin\julia -E "Pkg.add(\"CxxWrap\")"
+  - C:\projects\julia-build\bin\julia -E "Pkg.add(\"Xtensor\")"
+  # Install cookiecutter
+  - conda install cookiecutter -c conda-forge
+  # Run cookiecutter in build directory
+  - mkdir build
+  - cd build
+  - cookiecutter %APPVEYOR_BUILD_FOLDER% --no-input
+       # Defaults to
+       # "author_name": "",
+       # "author_email": "",
+       # "github_project_name": "Xexample.jl",
+       # "github_organization_name": "QuantStack",
+       # "julia_package_name": "Xexample",
+       # "cpp_namespace": "ext",
+       # "project_short_description": "An example xtensor extension"
+  # Making the generated package a git repository for Julia
+  - cd Xexample.jl
+  - git init
+  - git add .
+  - git commit -m "Initial commit"
+  # Building the generated package
+  - C:\projects\julia-build\bin\julia -E "Pkg.clone(pwd())"
+  - C:\projects\julia-build\bin\julia -E "Pkg.build(\"\Xexample\")"
+
+#build_script:
+#  - C:\projects\julia-build\bin\julia -E "Pkg.test(\"Xexample\")"
