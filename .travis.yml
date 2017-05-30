@@ -1,0 +1,112 @@
+language: julia
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env: COMPILER=gcc GCC=4.9
+      julia: 0.5
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env: COMPILER=gcc GCC=5
+      julia: 0.6
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env: COMPILER=gcc GCC=5
+      julia: 0.5
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env: COMPILER=gcc GCC=6
+      julia: 0.5
+    - os: osx
+      osx_image: xcode8
+      compiler: clang
+env:
+  global:
+    - MINCONDA_VERSION="latest"
+    - MINCONDA_LINUX="Linux-x86_64"
+    - MINCONDA_OSX="MacOSX-x86_64"
+before_install:
+    - |
+      # Configure build variables
+      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        if [[ "$COMPILER" == "gcc" ]]; then
+          export CXX=g++-$GCC CC=gcc-$GCC;
+        fi
+        if [[ "$COMPILER" == "clang" ]]; then
+          export CXX=clang++-$CLANG CC=clang-$CLANG;
+        fi
+      elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        export CXX=clang++ CC=clang PYTHONHOME=$HOME/miniconda;
+      fi
+    
+install:
+    # Download and update miniconda
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        MINCONDA_OS=$MINCONDA_LINUX;
+      elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        MINCONDA_OS=$MINCONDA_OSX;
+      fi
+    - if [[ "$PY" == "3" ]]; then
+          wget "http://repo.continuum.io/miniconda/Miniconda3-$MINCONDA_VERSION-$MINCONDA_OS.sh" -O miniconda.sh;
+      else
+          wget "http://repo.continuum.io/miniconda/Miniconda2-$MINCONDA_VERSION-$MINCONDA_OS.sh" -O miniconda.sh;
+      fi
+    - bash miniconda.sh -b -p $HOME/miniconda
+    - export PATH="$HOME/miniconda/bin:$PATH"
+    - hash -r
+    - conda config --set always_yes yes --set changeps1 no
+    - conda clean --packages
+    - conda update -q conda
+    - conda info -a
+    - conda install cmake
+    # Install CxxWrap and Xtensor
+    - julia -E "Pkg.add(\"CxxWrap\")"
+    - julia -E "Pkg.add(\"Xtensor\")"
+    # Install cookiecutter
+    - conda install cookiecutter -c conda-forge
+    # Run cookiecutter in build directory
+    - mkdir build
+    - cd build
+    - cookiecutter $TRAVIS_BUILD_DIR --no-input
+         # Defaults to
+         # "author_name": "",
+         # "author_email": "",
+         # "github_project_name": "Xexample.jl",
+         # "github_organization_name": "QuantStack",
+         # "julia_package_name": "Xexample",
+         # "cpp_namespace": "ext",
+         # "project_short_description": "An example xtensor extension"
+    # Making the generated package a git repository for Julia
+    - cd Xexample.jl
+    - git init
+    - git add .
+    - git config --global user.email "victor.hugo@quantstack.net"
+    - git config --global user.name "Victor Hugo"
+    - git commit -m "Initial commit"
+    # Building the generated package
+    - julia -E "Pkg.clone(pwd())"
+    - julia -E "Pkg.build(\"\Xexample\")"
+
+#script:
+#    - julia -E "Pkg.test(\"Xexample\
+
