@@ -10,5 +10,9 @@ if !isfile(depsfile)
 end
 include(depsfile)
 
+import .._l_examples
+
+registry = CxxWrap.load_modules(_l_examples)
 CxxWrap.wrap_modules(_l_examples)
+
 end
