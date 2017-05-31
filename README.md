@@ -5,9 +5,7 @@
 [![Documentation Status](https://readthedocs.org/projects/xtensor/badge/?version=latest)](https://xtensor.readthedocs.io/en/latest/?badge=latest)
 [![Join the Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/QuantStack/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**The xtensor-julia-cookiecutter is stil in a pre-alpha stage**
-
-#### A [cookicutter](https://github.com/audreyr/cookiecutter) template for creating a custom Julia extension with xtensor
+#### A [cookiecutter](https://github.com/audreyr/cookiecutter) template for creating a custom Julia extension with xtensor
 
 ## What is xtensor-julia-cookiecutter?
 
