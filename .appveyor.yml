@@ -64,5 +64,5 @@ install:
   - C:\projects\julia-build\bin\julia -E "Pkg.clone(pwd())"
   - C:\projects\julia-build\bin\julia -E "Pkg.build(\"\Xexample\")"
 
-#build_script:
-#  - C:\projects\julia-build\bin\julia -E "Pkg.test(\"Xexample\")"
+build_script:
+  - C:\projects\julia-build\bin\julia -E "Pkg.test(\"Xexample\")"
