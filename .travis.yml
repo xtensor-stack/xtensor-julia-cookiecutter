@@ -107,6 +107,6 @@ install:
     - julia -E "Pkg.clone(pwd())"
     - julia -E "Pkg.build(\"\Xexample\")"
 
-#script:
-#    - julia -E "Pkg.test(\"Xexample\
+script:
+    - julia -E "Pkg.test(\"Xexample\")"
 
