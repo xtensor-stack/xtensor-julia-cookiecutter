@@ -6,6 +6,7 @@ using CxxWrap
 build_type = "Release"
 jlcxx_dir = Pkg.dir("CxxWrap", "deps", "usr", "share", "cmake", "JlCxx")
 xtensor_dir = Pkg.dir("Xtensor", "deps", "usr", "share", "cmake", "xtensor")
+xtensor_julia_dir = Pkg.dir("Xtensor", "deps", "usr", "share", "cmake", "xtensor-julia")
 
 prefix             = joinpath(dirname(@__FILE__), "usr")
 extension_srcdir   = joinpath(dirname(@__FILE__), "{{ cookiecutter.cpp_package_name }}")
@@ -36,7 +37,7 @@ for l in example_labels
 end
 
 extension_steps = @build_steps begin
-  `cmake -G "$genopt" -DCMAKE_PREFIX_PATH=$prefix -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_BUILD_TYPE="$build_type" -DJlCxx_DIR=$jlcxx_dir -Dxtensor_DIR=$xtensor_dir $extension_srcdir`
+  `cmake -G "$genopt" -DCMAKE_PREFIX_PATH=$prefix -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_BUILD_TYPE="$build_type" -DJlCxx_DIR=$jlcxx_dir -Dxtensor_DIR=$xtensor_dir -Dxtensor-julia_DIR=$xtensor_julia_dir $extension_srcdir`
   `cmake --build . --config $build_type --target install`
 end
 
