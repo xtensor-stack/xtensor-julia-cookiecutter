@@ -46,7 +46,7 @@ information:
 This will produce a directory containing all the required content for a minimal extension
 project making use of xtensor with all the required boilerplate for package management,
 together with a few basic examples. The generated Python extension requires an installation
-of  `xtensor` `^0.10.2`, `xtensor-julia` `^0.1.0`, and `CxxWrap` `^0.4.0`.
+of  `xtensor` `^0.11.0`, `xtensor-julia` `^0.0.6`, and `CxxWrap` `^0.5.0`.
 
 ## Resources
 

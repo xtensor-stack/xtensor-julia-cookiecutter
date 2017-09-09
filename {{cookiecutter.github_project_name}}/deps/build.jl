@@ -4,9 +4,9 @@ using CxxWrap
 @BinDeps.setup
 
 build_type = "Release"
-jlcxx_dir = Pkg.dir("CxxWrap", "deps", "usr", "share", "cmake", "JlCxx")
-xtensor_dir = Pkg.dir("Xtensor", "deps", "usr", "share", "cmake", "xtensor")
-xtensor_julia_dir = Pkg.dir("Xtensor", "deps", "usr", "share", "cmake", "xtensor-julia")
+jlcxx_dir         = Pkg.dir("CxxWrap", "deps", "usr", "share", "cmake", "JlCxx")
+xtensor_dir       = Pkg.dir("Xtensor", "deps", "usr", "lib", "cmake", "xtensor")
+xtensor_julia_dir = Pkg.dir("Xtensor", "deps", "usr", "lib", "cmake", "xtensor-julia")
 
 prefix             = joinpath(dirname(@__FILE__), "usr")
 extension_srcdir   = joinpath(dirname(@__FILE__), "{{ cookiecutter.cpp_package_name }}")
