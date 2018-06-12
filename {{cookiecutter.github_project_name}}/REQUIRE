@@ -1,5 +1,5 @@
-julia 0.5
+julia 0.6
 BinDeps 0.4.2
 Compat 0.21
-CxxWrap 0.4
-Xtensor 0.0.1
+CxxWrap 0.6.0 0.7
+Xtensor 0.3.0

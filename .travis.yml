@@ -71,8 +71,8 @@ install:
     - conda info -a
     - conda install cmake
     # Install CxxWrap and Xtensor
-    - julia -E "Pkg.add(\"CxxWrap\", v\"0.5.0\", v\"0.6.0\")"
-    - julia -E "Pkg.add(\"Xtensor\")"
+    - julia -E "Pkg.add(\"CxxWrap\", v\"0.6.0\", v\"0.7.0\")"
+    - julia -E "Pkg.add(\"Xtensor\", v\"0.3.0\")"
     # Install cookiecutter
     - conda install cookiecutter -c conda-forge
     # Run cookiecutter in build directory
