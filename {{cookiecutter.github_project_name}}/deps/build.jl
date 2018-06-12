@@ -4,8 +4,8 @@ using CxxWrap
 @BinDeps.setup
 
 build_type = "Release"
-jlcxx_dir = Pkg.dir("CxxWrap", "deps", "usr", "share", "cmake", "JlCxx")
-xtensor_dir = Pkg.dir("Xtensor", "deps", "usr", "lib", "cmake", "xtensor")
+jlcxx_dir         = Pkg.dir("CxxWrap", "deps", "usr", "lib", "cmake", "JlCxx")
+xtensor_dir       = Pkg.dir("Xtensor", "deps", "usr", "lib", "cmake", "xtensor")
 xtensor_julia_dir = Pkg.dir("Xtensor", "deps", "usr", "lib", "cmake", "xtensor-julia")
 
 prefix             = joinpath(dirname(@__FILE__), "usr")
