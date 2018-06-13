@@ -37,8 +37,8 @@ install:
   - conda install cmake
   # Install CxxWrap and Xtensor
   - set BUILD_ON_WINDOWS=1
-  - C:\projects\julia-build\bin\julia -E "Pkg.add(\"CxxWrap\", v\"0.5.0\", v\"0.6.0\")"
-  - C:\projects\julia-build\bin\julia -E "Pkg.add(\"Xtensor\")"
+  - C:\projects\julia-build\bin\julia -E "Pkg.add(\"CxxWrap\", v\"0.6.0\", v\"0.7.0\")"
+  - C:\projects\julia-build\bin\julia -E "Pkg.add(\"Xtensor\", v\"0.3.0\")"
   # Install cookiecutter
   - conda install cookiecutter -c conda-forge
   # Run cookiecutter in build directory
