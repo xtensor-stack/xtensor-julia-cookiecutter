@@ -1,5 +1,4 @@
-julia 0.6
-BinDeps 0.4.2
-Compat 0.21
-CxxWrap 0.6.0 0.7
-Xtensor 0.3.0
+julia 1.0
+BinDeps 0.8.1
+CxxWrap 0.8.1 0.9
+Xtensor 0.6.1

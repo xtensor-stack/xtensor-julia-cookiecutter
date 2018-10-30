@@ -7,18 +7,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-4.9
-      env: COMPILER=gcc GCC=4.9
-      julia: 0.6
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
             - g++-5
       env: COMPILER=gcc GCC=5
-      julia: 0.6
+      julia: 1.0.1
     - os: linux
       addons:
         apt:
@@ -27,10 +18,11 @@ matrix:
           packages:
             - g++-6
       env: COMPILER=gcc GCC=6
-      julia: 0.6
+      julia: 1.0.1
     - os: osx
       osx_image: xcode8
       compiler: clang
+      julia: 1.0.1
 env:
   global:
     - MINCONDA_VERSION="latest"
@@ -49,7 +41,6 @@ before_install:
       elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         export CXX=clang++ CC=clang PYTHONHOME=$HOME/miniconda;
       fi
-    
 install:
     # Download and update miniconda
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -69,12 +60,11 @@ install:
     - conda clean --packages
     - conda update -q conda
     - conda info -a
-    - conda install cmake
+    # Install cmake and cookiecutter
+    - conda install cmake cookiecutter -c conda-forge
     # Install CxxWrap and Xtensor
-    - julia -E "Pkg.add(\"CxxWrap\", v\"0.6.0\", v\"0.7.0\")"
-    - julia -E "Pkg.add(\"Xtensor\", v\"0.3.0\")"
-    # Install cookiecutter
-    - conda install cookiecutter -c conda-forge
+    - julia -E "using Pkg; Pkg.add(PackageSpec(name=\"CxxWrap\", version=\"0.8.1\"))"
+    - julia -E "using Pkg; Pkg.add(PackageSpec(name=\"Xtensor\", version=\"0.6.1\"))"
     # Run cookiecutter in build directory
     - mkdir build
     - cd build
@@ -95,9 +85,8 @@ install:
     - git config --global user.name "Victor Hugo"
     - git commit -m "Initial commit"
     # Building the generated package
-    - julia -E "Pkg.clone(pwd())"
-    - julia -E "Pkg.build(\"\Xexample\")"
+    - julia -E "using Pkg; Pkg.add(PackageSpec(name=\"Xexample\", path=\"$PWD\"));"
 
 script:
-    - julia -E "Pkg.test(\"Xexample\")"
+    - julia -E "using Pkg; Pkg.test(\"Xexample\")"
 
