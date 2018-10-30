@@ -9,4 +9,6 @@ if !isfile(depsfile)
 end
 include(depsfile)
 
+@wrapmodule _l_examples
+
 end
