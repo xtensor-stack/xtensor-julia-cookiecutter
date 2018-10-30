@@ -1,26 +1,32 @@
 using BinDeps
 using CxxWrap
+using Xtensor
 
 @BinDeps.setup
 
 build_type = "Release"
-jlcxx_dir         = Pkg.dir("CxxWrap", "deps", "usr", "lib", "cmake", "JlCxx")
-xtensor_dir       = Pkg.dir("Xtensor", "deps", "usr", "lib", "cmake", "xtensor")
-xtensor_julia_dir = Pkg.dir("Xtensor", "deps", "usr", "lib", "cmake", "xtensor-julia")
 
-prefix             = joinpath(dirname(@__FILE__), "usr")
-extension_srcdir   = joinpath(dirname(@__FILE__), "{{ cookiecutter.cpp_package_name }}")
-extension_builddir = joinpath(dirname(@__FILE__), "..", "builds", "{{ cookiecutter.julia_package_name }}")
+jlcxx_cmake_dir         = joinpath(dirname(pathof(CxxWrap)), "..", "deps", "usr", "lib", "cmake", "JlCxx")
 
-# Set generator if on windows
-@static if is_windows()
-    genopt = "NMake Makefiles"
+xtl_cmake_dir           = joinpath(dirname(pathof(Xtensor)), "..", "deps", "usr", "lib", "cmake", "xtl")
+xtensor_cmake_dir       = joinpath(dirname(pathof(Xtensor)), "..", "deps", "usr", "lib", "cmake", "xtensor")
+xtensor_julia_cmake_dir = joinpath(dirname(pathof(Xtensor)), "..", "deps", "usr", "lib", "cmake", "xtensor-julia")
+
+julia_bindir            = Sys.BINDIR
+
+prefix                  = joinpath(dirname(@__FILE__), "usr")
+extension_srcdir        = joinpath(dirname(@__FILE__), "{{ cookiecutter.cpp_package_name }}")
+extension_builddir      = joinpath(dirname(@__FILE__), "..", "builds", "{{ cookiecutter.julia_package_name }}")
+
+# Setup cmake generator
+@static if Sys.iswindows()
+    genopt = "MinGW Makefiles"
 else
     genopt = "Unix Makefiles"
 end
 
 # Build on windows: push BuildProcess into BinDeps defaults
-@static if is_windows()
+@static if Sys.iswindows()
   if haskey(ENV, "BUILD_ON_WINDOWS") && ENV["BUILD_ON_WINDOWS"] == "1"
     saved_defaults = deepcopy(BinDeps.defaults)
     empty!(BinDeps.defaults)
@@ -37,7 +43,7 @@ for l in example_labels
 end
 
 extension_steps = @build_steps begin
-  `cmake -G "$genopt" -DCMAKE_PREFIX_PATH=$prefix -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_BUILD_TYPE="$build_type" -DJlCxx_DIR=$jlcxx_dir -Dxtensor_DIR=$xtensor_dir -Dxtensor-julia_DIR=$xtensor_julia_dir $extension_srcdir`
+  `cmake -G "$genopt" -DCMAKE_PREFIX_PATH=$prefix -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_BUILD_TYPE="$build_type" -DJlCxx_DIR=$jlcxx_cmake_dir -Dxtl_DIR=$xtl_cmake_dir -Dxtensor_DIR=$xtensor_cmake_dir -Dxtensor-julia_DIR=$xtensor_julia_cmake_dir -DCMAKE_PROGRAM_PATH=$julia_bindir $extension_srcdir`
   `cmake --build . --config $build_type --target install`
 end
 
@@ -56,7 +62,7 @@ provides(BuildProcess,
 ])
 
 # Build on windows: pop BuildProcess from BinDeps defaults
-@static if is_windows()
+@static if Sys.iswindows()
   if haskey(ENV, "BUILD_ON_WINDOWS") && ENV["BUILD_ON_WINDOWS"] == "1"
     empty!(BinDeps.defaults)
     append!(BinDeps.defaults, saved_defaults)

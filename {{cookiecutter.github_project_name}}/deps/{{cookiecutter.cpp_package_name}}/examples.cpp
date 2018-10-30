@@ -56,8 +56,7 @@ int_t add(int_t i, int_t j)
 
 namespace tensors
 {
-
-    void init_tensor_module(jlcxx::Module& mod)
+    JLCXX_MODULE define_julia_module(jlcxx::Module& mod)
     {
         // Test jltensor
         mod.method("test_access", test_access);
@@ -76,6 +75,3 @@ namespace tensors
     }
 }
 
-JULIA_CPP_MODULE_BEGIN(registry)
-  tensors::init_tensor_module(registry.create_module("TensorFunctions"));
-JULIA_CPP_MODULE_END
