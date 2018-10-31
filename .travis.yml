@@ -76,16 +76,10 @@ install:
          # "github_organization_name": "QuantStack",
          # "julia_package_name": "Xexample",
          # "cpp_namespace": "ext",
-         # "project_short_description": "An example xtensor extension"
-    # Making the generated package a git repository for Julia
-    - cd Xexample.jl
-    - git init
-    - git add .
-    - git config --global user.email "victor.hugo@quantstack.net"
-    - git config --global user.name "Victor Hugo"
-    - git commit -m "Initial commit"
+         # "project_short_description": "An example xtensor extension",
+         # "git_init": "yes"
     # Building the generated package
-    - julia -E "using Pkg; Pkg.add(PackageSpec(name=\"Xexample\", path=\"$PWD\"));"
+    - julia -E "using Pkg; Pkg.add(PackageSpec(name=\"Xexample\", path=\"Xexample.jl\"));"
 
 script:
     - julia -E "using Pkg; Pkg.test(\"Xexample\")"
