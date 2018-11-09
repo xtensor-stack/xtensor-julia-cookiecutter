@@ -42,14 +42,12 @@ information:
 - `julia_package_name`: name of the Python package created by your extension,
 - `cpp_namespace`: name for the cpp namespace holding the implementation of your extension,
 - `project_short_description`: a short description for your project.
-  
+
 This will produce a directory containing all the required content for a minimal extension
 project making use of xtensor with all the required boilerplate for package management,
-together with a few basic examples. The generated Python extension requires an installation
-of  `xtensor` `^0.10.2`, `xtensor-julia` `^0.1.0`, and `CxxWrap` `^0.4.0`.
+together with a few basic examples.
 
 ## Resources
 
-- [Documentation of xtensor](https://xtensor.readthedocs.io/en/latest/)
-- [Documentation of xtensor-python](https://xtensor-pyhton.readthedocs.io/en/latest/)
-- [Documentation of xtensor-julia](https://xtensor-julia.readthedocs.io/en/latest/)
+- [Documentation of xtensor](https://xtensor.readthedocs.io)
+- [Documentation of xtensor-julia](https://xtensor-julia.readthedocs.io)
