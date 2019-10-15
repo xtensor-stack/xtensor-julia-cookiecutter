@@ -48,7 +48,7 @@ install:
        # "author_name": "",
        # "author_email": "",
        # "github_project_name": "Xexample.jl",
-       # "github_organization_name": "QuantStack",
+       # "github_organization_name": "xtensor-stack",
        # "julia_package_name": "Xexample",
        # "cpp_namespace": "ext",
        # "project_short_description": "An example xtensor extension",

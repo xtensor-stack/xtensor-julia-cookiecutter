@@ -1,7 +1,7 @@
 # ![xtensor-cookiecutter](xtensor-cookiecutter.svg)
 
-[![Travis](https://travis-ci.org/QuantStack/xtensor-julia-cookiecutter.svg?branch=master)](https://travis-ci.org/QuantStack/xtensor-julia-cookiecutter)
-[![Appveyor](https://ci.appveyor.com/api/projects/status/p3g5252ubpi0am6x?svg=true)](https://ci.appveyor.com/project/QuantStack/xtensor-julia-cookiecutter)
+[![Travis](https://travis-ci.org/xtensor-stack/xtensor-julia-cookiecutter.svg?branch=master)](https://travis-ci.org/xtensor-stack/xtensor-julia-cookiecutter)
+[![Appveyor](https://ci.appveyor.com/api/projects/status/b6x9fnq82420kfgm?svg=true)](https://ci.appveyor.com/project/xtensor-stack/xtensor-julia-cookiecutter)
 [![Documentation Status](https://readthedocs.org/projects/xtensor/badge/?version=latest)](https://xtensor.readthedocs.io/en/latest/?badge=latest)
 [![Join the Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/QuantStack/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -29,7 +29,7 @@ Install [cookiecutter](https://github.com/audreyr/cookiecutter):
 
 After installing cookiecutter, use the xtensor-julia-cookiecutter:
 
-    $ cookiecutter https://github.com/QuantStack/xtensor-julia-cookiecutter.git
+    $ cookiecutter https://github.com/xtensor-stack/xtensor-julia-cookiecutter.git
 
 As xtensor-julia-cookiecutter runs, you will be asked for basic information about
 your custom extension project. You will be prompted for the following
